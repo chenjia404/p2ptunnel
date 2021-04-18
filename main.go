@@ -25,7 +25,7 @@ var (
 
 func main() {
 
-	fmt.Printf("p2pchat %s-%s\n", version, gitRev)
+	fmt.Printf("p2ptunnel %s-%s\n", version, gitRev)
 	fmt.Printf("buildTime %s\n", buildTime)
 	fmt.Printf("System version: %s\n", runtime.GOARCH+"/"+runtime.GOOS)
 	fmt.Printf("Golang version: %s\n", runtime.Version())
