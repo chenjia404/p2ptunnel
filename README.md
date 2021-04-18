@@ -1,4 +1,7 @@
 # p2ptunnel
+
+[English](./README.en.md)
+
 想和朋友联机玩游戏，下班了需要连接公司电脑，但是自己没有服务器，没有公网ip怎么办
 
 本应用可以建立tcp、udp隧道，把本地或者远程应用端口映射出来，不要求有公网，如果双方节点无法进行直连，会有其它节点进行中继转发，数据端对端加密，中继节点无法查看数据。
@@ -11,8 +14,8 @@
 
 ## 使用案例
 
-先下载对于平台的
-打开本机的远程桌面，朋友连接帮忙解决问题
+先下载对于平台的压缩包，解压，然后打开本机的远程桌面。
+
 ### 打开本地端口
 ./p2ptunnel -type tcp -l 3389
 
@@ -34,6 +37,6 @@
 
 ## 上游项目
 
-[go-libp2p](https://github.com/libp2p/go-libp2p)
+[go-libp2p](/libp2p/go-libp2p)
 
-[p2p-forwarder](https://github.com/nickname32/p2p-forwarder)
+[p2p-forwarder](/nickname32/p2p-forwarder)
