@@ -184,6 +184,7 @@ func createLibp2pHost(ctx context.Context, priv crypto.PrivKey) (host.Host, erro
 		libp2p.ConnectionManager(connmgr),
 
 		libp2p.EnableRelay(),
+		libp2p.EnableRelayService(),
 		libp2p.EnableAutoRelay(autorelay.WithDefaultStaticRelays(), autorelay.WithCircuitV1Support()),
 		libp2p.DefaultPeerstore,
 
