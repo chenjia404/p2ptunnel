@@ -4,9 +4,8 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"p2ptunnel/p2pforwarder"
 	"runtime"
-
-	p2pforwarder "github.com/nickname32/p2p-forwarder"
 )
 
 var (
@@ -18,7 +17,7 @@ var (
 )
 
 var (
-	version   = "0.0.1"
+	version   = "0.0.3"
 	gitRev    = ""
 	buildTime = ""
 )
@@ -30,9 +29,10 @@ func main() {
 	fmt.Printf("System version: %s\n", runtime.GOARCH+"/"+runtime.GOOS)
 	fmt.Printf("Golang version: %s\n", runtime.Version())
 
-	port := flag.Uint("l", 12000, "libp2p listen port")
+	port := flag.Uint("l", 12000, "listen port")
+	ip := flag.String("ip", "127.0.0.1", "forwarder to ip or listen ip")
 	id := flag.String("id", "", "Destination multiaddr id string")
-	networkType := flag.String("type", "", "network type tcp/udp")
+	networkType := flag.String("type", "tcp", "network type tcp/udp")
 	flag.Parse()
 
 	var err error
@@ -59,10 +59,14 @@ func main() {
 			openUDPPorts[*port] = cancel
 		}
 	} else {
-		listenip, cancel, err := fwr.Connect(*id)
+		listenip, cancel, err := fwr.Connect(*id, *ip)
 		if err != nil {
-			log.Panicln(err)
-			return
+			log.Println("Connect id:%s ip:%s", *id, *ip)
+			listenip, cancel, err = fwr.Connect(*id, *ip)
+			if err != nil {
+				log.Panicln(err)
+				return
+			}
 		}
 
 		connections[*id] = cancel

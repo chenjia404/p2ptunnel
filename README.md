@@ -37,6 +37,6 @@
 
 ## 上游项目
 
-[go-libp2p](/libp2p/go-libp2p)
+[go-libp2p](https://github.com/libp2p/go-libp2p)
 
-[p2p-forwarder](/nickname32/p2p-forwarder)
+[p2p-forwarder](https://github.com/nickname32/p2p-forwarder)
