@@ -3,6 +3,7 @@ package p2pforwarder
 import (
 	"context"
 	"github.com/libp2p/go-libp2p-core/routing"
+	"github.com/libp2p/go-libp2p/p2p/net/connmgr"
 	"github.com/libp2p/go-libp2p/p2p/security/noise"
 	"io/ioutil"
 	"os"
@@ -11,7 +12,6 @@ import (
 	"time"
 
 	"github.com/libp2p/go-libp2p"
-	connmgr "github.com/libp2p/go-libp2p-connmgr"
 	"github.com/libp2p/go-libp2p-core/crypto"
 	"github.com/libp2p/go-libp2p-core/host"
 	"github.com/libp2p/go-libp2p-core/peer"
@@ -154,7 +154,12 @@ func loadUserPrivKey() (priv crypto.PrivKey, err error) {
 func createLibp2pHost(ctx context.Context, priv crypto.PrivKey) (host.Host, error) {
 	var d *dht.IpfsDHT
 
-	h, err := libp2p.New(
+	connmgr, _ := connmgr.NewConnManager(
+		100, // Lowwater
+		400, // HighWater,
+		connmgr.WithGracePeriod(time.Minute),
+	)
+	var h, err = libp2p.New(
 		libp2p.Identity(priv),
 
 		libp2p.ListenAddrStrings(
@@ -177,15 +182,10 @@ func createLibp2pHost(ctx context.Context, priv crypto.PrivKey) (host.Host, erro
 
 		libp2p.Muxer("/yamux/1.0.0", yamux.DefaultTransport),
 
-		libp2p.ConnectionManager(connmgr.NewConnManager(
-			100,         // Lowwater
-			400,         // HighWater,
-			time.Minute, // GracePeriod
-		)),
-
 		libp2p.NATPortMap(),
 
 		libp2p.EnableNATService(),
+		libp2p.ConnectionManager(connmgr),
 
 		libp2p.EnableAutoRelay(),
 		libp2p.EnableRelay(),
