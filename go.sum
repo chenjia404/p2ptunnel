@@ -509,8 +509,6 @@ github.com/libp2p/go-libp2p-testing v0.11.0/go.mod h1:qG4sF27dfKFoK9KlVzK2y52LQK
 github.com/libp2p/go-libp2p-testing v0.12.0 h1:EPvBb4kKMWO29qP4mZGyhVzUyR25dvfUIK5WDu6iPUA=
 github.com/libp2p/go-libp2p-testing v0.12.0/go.mod h1:KcGDRXyN7sQCllucn1cOOS+Dmm7ujhfEyXQL5lvkcPg=
 github.com/libp2p/go-libp2p-tls v0.3.0/go.mod h1:fwF5X6PWGxm6IDRwF3V8AVCCj/hOd5oFlg+wo2FxJDY=
-github.com/libp2p/go-libp2p-tls v0.5.0 h1:aRNTeOI8Ljm1r4L2uMGxkMsVnyZoPwaqQqMw23qAsQs=
-github.com/libp2p/go-libp2p-tls v0.5.0/go.mod h1:1a4tq0xQSZ0kAkDkZVAppuP3SAIUHcnzi2djJ/2EN4I=
 github.com/libp2p/go-libp2p-transport-upgrader v0.7.0/go.mod h1:GIR2aTRp1J5yjVlkUoFqMkdobfob6RnAwYg/RZPhrzg=
 github.com/libp2p/go-libp2p-xor v0.1.0/go.mod h1:LSTM5yRnjGZbWNTA/hRwq2gGFrvRIbQJscoIL/u6InY=
 github.com/libp2p/go-libp2p-yamux v0.8.0/go.mod h1:yTkPgN2ib8FHyU1ZcVD7aelzyAqXXwEPbyx+aSKm9h8=
@@ -544,10 +542,6 @@ github.com/libp2p/go-sockaddr v0.0.2/go.mod h1:syPvOmNs24S3dFVGJA1/mrqdeijPxLV2L
 github.com/libp2p/go-sockaddr v0.1.0/go.mod h1:syPvOmNs24S3dFVGJA1/mrqdeijPxLV2Le3BRLKd68k=
 github.com/libp2p/go-stream-muxer-multistream v0.4.0/go.mod h1:nb+dGViZleRP4XcyHuZSVrJCBl55nRBOMmiSL/dyziw=
 github.com/libp2p/go-tcp-transport v0.5.0/go.mod h1:UPPL0DIjQqiWRwVAb+CEQlaAG0rp/mCqJfIhFcLHc4Y=
-github.com/libp2p/go-tcp-transport v0.6.1 h1:oLOEy8J9WuzaWpz9pi86lQz2E0A5DwuKASn4hXYIAkk=
-github.com/libp2p/go-tcp-transport v0.6.1/go.mod h1:HjaB4sPkp5Qkd5l9f9cDJR8m0s2oJtY3tNHdAOioYeY=
-github.com/libp2p/go-ws-transport v0.7.0 h1:TJYvBgWpPYAE5sN3V5y0cu7ivxGxzwvF/FhyYFnzkNs=
-github.com/libp2p/go-ws-transport v0.7.0/go.mod h1:ZgC5TYCKUIUJTjgd5Mb17Tu3K0vFYB409nzRYGaJu0I=
 github.com/libp2p/go-yamux/v3 v3.0.1/go.mod h1:s2LsDhHbh+RfCsQoICSYt58U2f8ijtPANFD8BmE74Bo=
 github.com/libp2p/go-yamux/v3 v3.1.1/go.mod h1:jeLEQgLXqE2YqX1ilAClIfCMDY+0uXQUKmmb/qp0gT4=
 github.com/libp2p/go-yamux/v3 v3.1.2/go.mod h1:jeLEQgLXqE2YqX1ilAClIfCMDY+0uXQUKmmb/qp0gT4=

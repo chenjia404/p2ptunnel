@@ -2,24 +2,25 @@ package p2pforwarder
 
 import (
 	"context"
-	"github.com/libp2p/go-libp2p-core/routing"
-	"github.com/libp2p/go-libp2p/p2p/net/connmgr"
-	"github.com/libp2p/go-libp2p/p2p/security/noise"
+	libp2pquic "github.com/libp2p/go-libp2p/p2p/transport/quic"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"sync"
 	"time"
 
+	"github.com/libp2p/go-libp2p/core/routing"
+	"github.com/libp2p/go-libp2p/p2p/net/connmgr"
+	"github.com/libp2p/go-libp2p/p2p/security/noise"
+
 	"github.com/libp2p/go-libp2p"
-	"github.com/libp2p/go-libp2p-core/crypto"
-	"github.com/libp2p/go-libp2p-core/host"
-	"github.com/libp2p/go-libp2p-core/peer"
 	dht "github.com/libp2p/go-libp2p-kad-dht"
-	libp2ptls "github.com/libp2p/go-libp2p-tls"
 	yamux "github.com/libp2p/go-libp2p-yamux"
-	"github.com/libp2p/go-tcp-transport"
-	websocket "github.com/libp2p/go-ws-transport"
+	"github.com/libp2p/go-libp2p/core/crypto"
+	"github.com/libp2p/go-libp2p/core/host"
+	"github.com/libp2p/go-libp2p/core/peer"
+	libp2ptls "github.com/libp2p/go-libp2p/p2p/security/tls"
+	"github.com/libp2p/go-libp2p/p2p/transport/tcp"
 	"github.com/sparkymat/appdir"
 )
 
@@ -173,9 +174,9 @@ func createLibp2pHost(ctx context.Context, priv crypto.PrivKey) (host.Host, erro
 			"/ip6/::/tcp/0/ws",
 		),
 
-		//libp2p.Transport(libp2pquic.NewTransport),
+		libp2p.Transport(libp2pquic.NewTransport),
 		libp2p.Transport(tcp.NewTCPTransport),
-		libp2p.Transport(websocket.New),
+		//libp2p.Transport(websocket.New),
 
 		libp2p.Security(noise.ID, noise.New),
 		libp2p.Security(libp2ptls.ID, libp2ptls.New),
@@ -188,7 +189,6 @@ func createLibp2pHost(ctx context.Context, priv crypto.PrivKey) (host.Host, erro
 		libp2p.ConnectionManager(connmgr),
 
 		libp2p.EnableAutoRelay(),
-		libp2p.EnableRelay(),
 		libp2p.DefaultPeerstore,
 
 		libp2p.Routing(func(h host.Host) (routing.PeerRouting, error) {
