@@ -14,11 +14,19 @@ builds:
       - linux
       - windows
       - darwin
+    goarch:
+      - 386
+      - amd64
+      - arm
+    ignore:
+      - goos: windows
+        goarch: arm
+        goarm: 6
     ldflags:
-      - -s -w -X main.gitRev="{{.Env.GITCOMMIT}}" -X main.buildTime="{{.Env.BUILDTIME}}"
-    # hooks:
-    #   post:
-    #     - upx "{{ .Path }}"
+      - -s -w -X main.gitRev="{{.ShortCommit}}" -X main.buildTime="{{.CommitDate}}"
+    hooks:
+      post:
+        - upx "{{ .Path }}"
 
 archives:
   - 
@@ -33,7 +41,7 @@ archives:
 checksum:
   name_template: 'checksums.txt'
 snapshot:
-  name_template: "{{ .Tag }}-next"
+  name_template: "{{ .Tag }}"
 changelog:
   sort: asc
   filters:
