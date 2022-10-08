@@ -2,6 +2,7 @@ package p2pforwarder
 
 import (
 	"context"
+	"github.com/libp2p/go-libp2p/p2p/host/autorelay"
 	libp2pquic "github.com/libp2p/go-libp2p/p2p/transport/quic"
 	"io/ioutil"
 	"os"
@@ -15,7 +16,6 @@ import (
 
 	"github.com/libp2p/go-libp2p"
 	dht "github.com/libp2p/go-libp2p-kad-dht"
-	yamux "github.com/libp2p/go-libp2p-yamux"
 	"github.com/libp2p/go-libp2p/core/crypto"
 	"github.com/libp2p/go-libp2p/core/host"
 	"github.com/libp2p/go-libp2p/core/peer"
@@ -169,9 +169,6 @@ func createLibp2pHost(ctx context.Context, priv crypto.PrivKey) (host.Host, erro
 
 			"/ip4/0.0.0.0/tcp/0",
 			"/ip6/::/tcp/0",
-
-			"/ip4/0.0.0.0/tcp/0/ws",
-			"/ip6/::/tcp/0/ws",
 		),
 
 		libp2p.Transport(libp2pquic.NewTransport),
@@ -181,14 +178,13 @@ func createLibp2pHost(ctx context.Context, priv crypto.PrivKey) (host.Host, erro
 		libp2p.Security(noise.ID, noise.New),
 		libp2p.Security(libp2ptls.ID, libp2ptls.New),
 
-		libp2p.Muxer("/yamux/1.0.0", yamux.DefaultTransport),
-
 		libp2p.NATPortMap(),
 
 		libp2p.EnableNATService(),
 		libp2p.ConnectionManager(connmgr),
 
-		libp2p.EnableAutoRelay(),
+		libp2p.EnableRelay(),
+		libp2p.EnableAutoRelay(autorelay.WithDefaultStaticRelays(), autorelay.WithCircuitV1Support()),
 		libp2p.DefaultPeerstore,
 
 		libp2p.Routing(func(h host.Host) (routing.PeerRouting, error) {
