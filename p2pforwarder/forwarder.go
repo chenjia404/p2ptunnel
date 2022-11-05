@@ -2,13 +2,14 @@ package p2pforwarder
 
 import (
 	"context"
-	"github.com/libp2p/go-libp2p/p2p/host/autorelay"
-	libp2pquic "github.com/libp2p/go-libp2p/p2p/transport/quic"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"sync"
 	"time"
+
+	"github.com/libp2p/go-libp2p/p2p/host/autorelay"
+	libp2pquic "github.com/libp2p/go-libp2p/p2p/transport/quic"
 
 	"github.com/libp2p/go-libp2p/core/routing"
 	"github.com/libp2p/go-libp2p/p2p/net/connmgr"
@@ -185,7 +186,7 @@ func createLibp2pHost(ctx context.Context, priv crypto.PrivKey) (host.Host, erro
 
 		libp2p.EnableRelay(),
 		libp2p.EnableRelayService(),
-		libp2p.EnableAutoRelay(autorelay.WithDefaultStaticRelays(), autorelay.WithCircuitV1Support()),
+		libp2p.EnableAutoRelay(autorelay.WithDefaultStaticRelays(), autorelay.WithCircuitV1Support(), autorelay.WithNumRelays(20)),
 		libp2p.DefaultPeerstore,
 
 		libp2p.Routing(func(h host.Host) (routing.PeerRouting, error) {
