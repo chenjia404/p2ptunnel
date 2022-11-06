@@ -61,7 +61,7 @@ func main() {
 	} else {
 		listenip, cancel, err := fwr.Connect(*id, *ip)
 		if err != nil {
-			log.Println("Connect id:%s ip:%s", *id, *ip)
+			log.Printf("Connect id:%s ip:%s\n", *id, *ip)
 			listenip, cancel, err = fwr.Connect(*id, *ip)
 			if err != nil {
 				log.Panicln(err)
@@ -71,7 +71,7 @@ func main() {
 
 		connections[*id] = cancel
 
-		log.Println("Connections to %s's ports are listened on %s", id, listenip)
+		log.Printf("Connections to %s's ports are listened on %s\n", id, listenip)
 	}
 
 	select {}
