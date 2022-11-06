@@ -2,7 +2,10 @@ package p2pforwarder
 
 import (
 	"context"
+	"github.com/ipfs/go-cid"
+	"github.com/libp2p/go-libp2p/p2p/protocol/circuitv2/relay"
 	"io/ioutil"
+	"log"
 	"os"
 	"path/filepath"
 	"sync"
@@ -12,6 +15,7 @@ import (
 	libp2pquic "github.com/libp2p/go-libp2p/p2p/transport/quic"
 
 	"github.com/libp2p/go-libp2p/core/routing"
+	routing2 "github.com/libp2p/go-libp2p/p2p/discovery/routing"
 	"github.com/libp2p/go-libp2p/p2p/net/connmgr"
 	"github.com/libp2p/go-libp2p/p2p/security/noise"
 
@@ -22,6 +26,7 @@ import (
 	"github.com/libp2p/go-libp2p/core/peer"
 	libp2ptls "github.com/libp2p/go-libp2p/p2p/security/tls"
 	"github.com/libp2p/go-libp2p/p2p/transport/tcp"
+	mh "github.com/multiformats/go-multihash"
 	"github.com/sparkymat/appdir"
 )
 
@@ -153,6 +158,8 @@ func loadUserPrivKey() (priv crypto.PrivKey, err error) {
 	return priv, nil
 }
 
+const Protocol = "/p2ptunnel/0.1"
+
 func createLibp2pHost(ctx context.Context, priv crypto.PrivKey) (host.Host, error) {
 	var d *dht.IpfsDHT
 
@@ -213,7 +220,56 @@ func createLibp2pHost(ctx context.Context, priv crypto.PrivKey) (host.Host, erro
 		return nil, err
 	}
 
+	_, err = relay.New(h)
+	if err != nil {
+		log.Printf("Failed to instantiate the relay: %v", err)
+	}
+
+	d1 := routing2.NewRoutingDiscovery(d)
+
+	c, err := nsToCid(Protocol)
+	if err != nil {
+		panic(err)
+	}
+	err = d1.Provide(ctx, c, true)
+	if err != nil {
+		panic(err)
+	}
+
+	go func() {
+		peerChan, err := d1.FindPeers(ctx, Protocol)
+		if err != nil {
+			panic(err)
+		}
+
+		for peer := range peerChan {
+			if peer.ID == h.ID() {
+				log.Println("过滤自己")
+				continue
+			}
+			log.Println("寻找节点:", peer)
+
+			log.Println("尝试连接:", peer)
+			err = h.Connect(ctx, peer)
+			if err == nil {
+				log.Println("连接成功")
+			} else {
+				log.Println(err)
+			}
+		}
+
+	}()
+
 	return h, err
+}
+
+func nsToCid(ns string) (cid.Cid, error) {
+	h, err := mh.Sum([]byte(ns), mh.SHA2_256, -1)
+	if err != nil {
+		return cid.Undef, err
+	}
+
+	return cid.NewCidV1(cid.Raw, h), nil
 }
 
 // ID returns id of Forwarder
