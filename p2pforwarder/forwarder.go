@@ -3,6 +3,7 @@ package p2pforwarder
 import (
 	"context"
 	"github.com/ipfs/go-cid"
+	"github.com/libp2p/go-libp2p/core/network"
 	"io/ioutil"
 	"log"
 	"os"
@@ -225,7 +226,7 @@ func createLibp2pHost(ctx context.Context, priv crypto.PrivKey) (host.Host, erro
 		_, err = d1.Advertise(ctx, Protocol)
 
 		if err != nil {
-			panic(err)
+			log.Println(err)
 		}
 	}()
 
@@ -237,20 +238,12 @@ func createLibp2pHost(ctx context.Context, priv crypto.PrivKey) (host.Host, erro
 
 		for peer := range peerChan {
 			if peer.ID == h.ID() {
-				log.Println("过滤自己")
 				continue
 			}
-			log.Println("寻找节点:", peer)
-
-			log.Println("尝试连接:", peer)
-			err = h.Connect(ctx, peer)
-			if err == nil {
-				log.Println("连接成功")
-			} else {
-				log.Println(err)
+			if h.Network().Connectedness(peer.ID) != network.Connected {
+				h.Connect(ctx, peer)
 			}
 		}
-
 	}()
 
 	return h, err
