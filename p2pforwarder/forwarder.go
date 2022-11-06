@@ -3,7 +3,6 @@ package p2pforwarder
 import (
 	"context"
 	"github.com/ipfs/go-cid"
-	"github.com/libp2p/go-libp2p/p2p/protocol/circuitv2/relay"
 	"io/ioutil"
 	"log"
 	"os"
@@ -220,21 +219,15 @@ func createLibp2pHost(ctx context.Context, priv crypto.PrivKey) (host.Host, erro
 		return nil, err
 	}
 
-	_, err = relay.New(h)
-	if err != nil {
-		log.Printf("Failed to instantiate the relay: %v", err)
-	}
-
 	d1 := routing2.NewRoutingDiscovery(d)
 
-	c, err := nsToCid(Protocol)
-	if err != nil {
-		panic(err)
-	}
-	err = d1.Provide(ctx, c, true)
-	if err != nil {
-		panic(err)
-	}
+	go func() {
+		_, err = d1.Advertise(ctx, Protocol)
+
+		if err != nil {
+			panic(err)
+		}
+	}()
 
 	go func() {
 		peerChan, err := d1.FindPeers(ctx, Protocol)
