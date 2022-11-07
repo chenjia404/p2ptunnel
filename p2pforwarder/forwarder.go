@@ -2,7 +2,6 @@ package p2pforwarder
 
 import (
 	"context"
-	"github.com/ipfs/go-cid"
 	"github.com/libp2p/go-libp2p/core/network"
 	"io/ioutil"
 	"log"
@@ -26,7 +25,6 @@ import (
 	"github.com/libp2p/go-libp2p/core/peer"
 	libp2ptls "github.com/libp2p/go-libp2p/p2p/security/tls"
 	"github.com/libp2p/go-libp2p/p2p/transport/tcp"
-	mh "github.com/multiformats/go-multihash"
 	"github.com/sparkymat/appdir"
 )
 
@@ -236,31 +234,23 @@ func createLibp2pHost(ctx context.Context, priv crypto.PrivKey) (host.Host, erro
 			panic(err)
 		}
 
-		for peer := range peerChan {
-			if peer.ID == h.ID() {
+		for dhtPeer := range peerChan {
+			if dhtPeer.ID == h.ID() {
 				continue
 			}
-			if h.Network().Connectedness(peer.ID) != network.Connected {
-				h.Connect(ctx, peer)
+			if h.Network().Connectedness(dhtPeer.ID) != network.Connected {
+				h.Connect(ctx, dhtPeer)
 			}
 		}
+		time.Sleep(time.Second * 10)
 	}()
 
 	return h, err
 }
 
-func nsToCid(ns string) (cid.Cid, error) {
-	h, err := mh.Sum([]byte(ns), mh.SHA2_256, -1)
-	if err != nil {
-		return cid.Undef, err
-	}
-
-	return cid.NewCidV1(cid.Raw, h), nil
-}
-
 // ID returns id of Forwarder
 func (f *Forwarder) ID() string {
-	return f.host.ID().Pretty()
+	return f.host.ID().String()
 }
 
 var onErrFn = func(err error) {

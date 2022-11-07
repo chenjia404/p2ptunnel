@@ -17,7 +17,7 @@ var (
 )
 
 var (
-	version   = "0.0.4"
+	version   = "0.0.5"
 	gitRev    = ""
 	buildTime = ""
 )
@@ -65,6 +65,7 @@ func main() {
 			listenip, cancel, err = fwr.Connect(*id, *ip)
 			if err != nil {
 				log.Panicln(err)
+				//todo 使用中继连接
 				return
 			}
 		}
