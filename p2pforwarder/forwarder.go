@@ -10,11 +10,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/libp2p/go-libp2p/p2p/host/autorelay"
-	libp2pquic "github.com/libp2p/go-libp2p/p2p/transport/quic"
-
 	"github.com/libp2p/go-libp2p/core/routing"
 	routing2 "github.com/libp2p/go-libp2p/p2p/discovery/routing"
+	"github.com/libp2p/go-libp2p/p2p/host/autorelay"
 	"github.com/libp2p/go-libp2p/p2p/net/connmgr"
 	"github.com/libp2p/go-libp2p/p2p/security/noise"
 
@@ -24,7 +22,7 @@ import (
 	"github.com/libp2p/go-libp2p/core/host"
 	"github.com/libp2p/go-libp2p/core/peer"
 	libp2ptls "github.com/libp2p/go-libp2p/p2p/security/tls"
-	"github.com/libp2p/go-libp2p/p2p/transport/tcp"
+	webtransport "github.com/libp2p/go-libp2p/p2p/transport/webtransport"
 	"github.com/sparkymat/appdir"
 )
 
@@ -175,11 +173,16 @@ func createLibp2pHost(ctx context.Context, priv crypto.PrivKey) (host.Host, erro
 
 			"/ip4/0.0.0.0/tcp/0",
 			"/ip6/::/tcp/0",
+
+			"/ip4/0.0.0.0/tcp/0/ws",
+			"/ip6/::/tcp/0/ws",
+
+			"/ip4/0.0.0.0/udp/0/quic/webtransport",
+			"/ip6/::/udp/0/quic/webtransport",
 		),
 
-		libp2p.Transport(libp2pquic.NewTransport),
-		libp2p.Transport(tcp.NewTCPTransport),
-		//libp2p.Transport(websocket.New),
+		libp2p.DefaultTransports,
+		libp2p.Transport(webtransport.New),
 
 		libp2p.Security(noise.ID, noise.New),
 		libp2p.Security(libp2ptls.ID, libp2ptls.New),
