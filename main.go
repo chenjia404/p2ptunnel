@@ -17,7 +17,7 @@ var (
 )
 
 var (
-	version   = "0.0.5"
+	version   = "0.0.6"
 	gitRev    = ""
 	buildTime = ""
 )
