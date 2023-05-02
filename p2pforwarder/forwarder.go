@@ -2,13 +2,15 @@ package p2pforwarder
 
 import (
 	"context"
-	"github.com/libp2p/go-libp2p/core/network"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
 	"sync"
 	"time"
+
+	"github.com/libp2p/go-libp2p/core/network"
 
 	"github.com/libp2p/go-libp2p/core/routing"
 	routing2 "github.com/libp2p/go-libp2p/p2p/discovery/routing"
@@ -63,7 +65,7 @@ func newOpenPortsStore() *openPortsStore {
 }
 
 // NewForwarder - instances Forwarder and connects it to libp2p network
-func NewForwarder() (*Forwarder, context.CancelFunc, error) {
+func NewForwarder(p2p_port int) (*Forwarder, context.CancelFunc, error) {
 	priv, err := loadUserPrivKey()
 	if err != nil {
 		return nil, nil, err
@@ -71,10 +73,14 @@ func NewForwarder() (*Forwarder, context.CancelFunc, error) {
 
 	ctx, cancel := context.WithCancel(context.Background())
 
-	h, err := createLibp2pHost(ctx, priv)
+	h, err := createLibp2pHost(ctx, priv, p2p_port)
 	if err != nil {
 		cancel()
 		return nil, nil, err
+	}
+
+	for _, value := range h.Addrs() {
+		fmt.Println("multiaddr:" + value.String())
 	}
 
 	f := &Forwarder{
@@ -154,29 +160,29 @@ func loadUserPrivKey() (priv crypto.PrivKey, err error) {
 
 const Protocol = "/p2ptunnel/0.1"
 
-func createLibp2pHost(ctx context.Context, priv crypto.PrivKey) (host.Host, error) {
+func createLibp2pHost(ctx context.Context, priv crypto.PrivKey, p2p_port int) (host.Host, error) {
 	var d *dht.IpfsDHT
 
 	connmgr, _ := connmgr.NewConnManager(
-		100, // Lowwater
-		400, // HighWater,
+		10,  // Lowwater
+		100, // HighWater,
 		connmgr.WithGracePeriod(time.Minute),
 	)
 	var h, err = libp2p.New(
 		libp2p.Identity(priv),
 
 		libp2p.ListenAddrStrings(
-			"/ip4/0.0.0.0/udp/0/quic",
-			"/ip6/::/udp/0/quic",
+			fmt.Sprintf("/ip4/0.0.0.0/tcp/%d", p2p_port),
+			fmt.Sprintf("/ip6/::/tcp/%d", p2p_port),
 
-			"/ip4/0.0.0.0/tcp/0",
-			"/ip6/::/tcp/0",
+			fmt.Sprintf("/ip4/0.0.0.0/tcp/%d/ws", p2p_port),
+			fmt.Sprintf("/ip6/::/tcp/%d/ws", p2p_port),
 
-			"/ip4/0.0.0.0/tcp/0/ws",
-			"/ip6/::/tcp/0/ws",
+			fmt.Sprintf("/ip4/0.0.0.0/udp/%d/quic-v1", p2p_port),
+			fmt.Sprintf("/ip6/::/udp/%d/quic-v1", p2p_port),
 
-			"/ip4/0.0.0.0/udp/0/quic/webtransport",
-			"/ip6/::/udp/0/quic/webtransport",
+			fmt.Sprintf("/ip4/0.0.0.0/udp/%d/quic-v1/webtransport", p2p_port),
+			fmt.Sprintf("/ip6/::/udp/%d/quic-v1/webtransport", p2p_port),
 		),
 
 		libp2p.DefaultTransports,

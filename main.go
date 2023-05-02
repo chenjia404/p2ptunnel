@@ -17,7 +17,7 @@ var (
 )
 
 var (
-	version   = "0.0.7"
+	version   = "0.0.8"
 	gitRev    = ""
 	buildTime = ""
 )
@@ -32,12 +32,13 @@ func main() {
 	port := flag.Uint("l", 12000, "listen port")
 	ip := flag.String("ip", "127.0.0.1", "forwarder to ip or listen ip")
 	id := flag.String("id", "", "Destination multiaddr id string")
+	p2p_port := flag.Int("p2p_port", 4001, "p2p use port")
 	networkType := flag.String("type", "tcp", "network type tcp/udp")
 	flag.Parse()
 
 	var err error
 
-	fwr, fwrCancel, err = p2pforwarder.NewForwarder()
+	fwr, fwrCancel, err = p2pforwarder.NewForwarder(*p2p_port)
 	if err != nil {
 		log.Panicln(err)
 	}

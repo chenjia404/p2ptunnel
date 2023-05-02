@@ -3,6 +3,8 @@ I want to play games with my friends online, and I need to connect to the compan
 
 This application can establish tcp and udp tunnels to map local or remote application ports. It does not require a public network. If the two nodes cannot be directly connected, there will be other nodes for relay forwarding, data end-to-end encryption, and relay node Unable to view data.
 
+The underlying transmission can be implemented using quic, tcp, package websocket, and webtransport, using the noise protocol to encrypt the transmission, with its own nat, which can be used in multi-layer combinations.
+
 ## working principle
 
 Computer a opens the application and maps a port, computer b opens the application, connects to computer a, and the port of computer a is mapped to the port 127.0.89.1 of this machine.
