@@ -3,7 +3,7 @@ module p2ptunnel
 go 1.19
 
 require (
-	github.com/libp2p/go-libp2p v0.27.1
+	github.com/libp2p/go-libp2p v0.27.2
 	//github.com/libp2p/go-libp2p-connmgr v0.4.0
 	github.com/libp2p/go-libp2p-kad-dht v0.23.0
 	github.com/sparkymat/appdir v0.0.0-20190803090504-1c2ab64aee87
