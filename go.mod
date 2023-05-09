@@ -9,7 +9,7 @@ require (
 	github.com/sparkymat/appdir v0.0.0-20190803090504-1c2ab64aee87
 )
 
-require github.com/pion/udp v0.1.4
+require github.com/pion/udp/v2 v2.0.1
 
 require (
 	github.com/benbjohnson/clock v1.3.0 // indirect
