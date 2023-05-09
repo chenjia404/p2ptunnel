@@ -1,4 +1,4 @@
-module p2ptunnel
+module github.com/chenjia404/p2ptunnel
 
 go 1.20
 
