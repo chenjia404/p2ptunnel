@@ -1,6 +1,6 @@
-# p2ptunnel
-
 [English](./README.en.md)
+
+# p2ptunnel
 
 想和朋友联机玩游戏，下班了需要连接公司电脑，但是自己没有服务器，没有公网ip怎么办
 
