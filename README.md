@@ -40,12 +40,12 @@
 可以通过路径里面的tcp、quic控制连接行为。
 
 ### 打开本地端口
-./p2ptunnel -type tcp -l 3389
+`./p2ptunnel -type tcp -l 3389`
 
 注意这里会输出你的节点id，然后通过聊天软件发给你的朋友，这里假设id是12D3。
 
 ### 连接
-./p2ptunnel -id 12D3
+`./p2ptunnel -id 12D3`
 
 连接可能需要几秒到1分钟，连接成功后，会输出 Listening tcp 127.0.89.0:3389 -> 3389
 
@@ -54,9 +54,7 @@
 
 ### 打包
 
-需要环境变量里面有upx，压缩二进制包
-
-goreleaser release --skip-publish  --rm-dist
+`goreleaser release --skip-publish  --rm-dist`
 
 ## 注意事项
 

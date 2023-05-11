@@ -15,12 +15,12 @@ If both computers are intranets, data will be relayed through other nodes, and e
 
 First download the compressed package for the platform, unzip it, and then open the remote desktop of the machine.
 ### Open local port
-./p2ptunnel -type tcp -l 3389
+`./p2ptunnel -type tcp -l 3389`
 
 Note that your node id will be output here, and then sent to your friends through the chat software, assuming the id is 12D3.
 
 ### connection
-./p2ptunnel -id 12D3
+`./p2ptunnel -id 12D3`
 
 The connection may take several seconds to 1 minute. After the connection is successful, it will output Listening tcp 127.0.89.0:3389 -> 3389
 
