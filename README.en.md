@@ -1,3 +1,5 @@
+[English](./README.md) | [简体中文](./README.zh-CN.md)
+
 # p2ptunnel
 I want to play games with my friends online, and I need to connect to the company computer after get off work, but I don’t have a server or public IP
 
