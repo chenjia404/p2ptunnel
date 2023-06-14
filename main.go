@@ -4,8 +4,9 @@ import (
 	"flag"
 	"fmt"
 	"log"
-	"p2ptunnel/p2pforwarder"
 	"runtime"
+
+	"github.com/chenjia404/p2ptunnel/p2pforwarder"
 )
 
 var (
