@@ -26,6 +26,7 @@
 |id  | multiaddr格式的 | 连接远程服务id|
 |p2p_port|ip端口  |p2p使用的端口，也是监听其它节点连接的端口，默认4001，会自动进行nat，但是可能需要您进行端口映射|
 |type|网络类型|tcp或者udp|
+|update|bool|是否检查更新|
 
 ### id格式(multiaddr)
 |  类型 | 样例|说明  |

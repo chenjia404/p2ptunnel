@@ -7,6 +7,7 @@ import (
 	"runtime"
 
 	"github.com/chenjia404/p2ptunnel/p2pforwarder"
+	"github.com/chenjia404/p2ptunnel/update"
 )
 
 var (
@@ -18,7 +19,7 @@ var (
 )
 
 var (
-	version   = "0.0.8"
+	version   = "0.0.9"
 	gitRev    = ""
 	buildTime = ""
 )
@@ -35,9 +36,15 @@ func main() {
 	id := flag.String("id", "", "Destination multiaddr id string")
 	p2p_port := flag.Int("p2p_port", 4001, "p2p use port")
 	networkType := flag.String("type", "tcp", "network type tcp/udp")
+	var flag_update = flag.Bool("update", false, "update form github")
 	flag.Parse()
 
 	var err error
+
+	if *flag_update {
+		update.CheckGithubVersion(version)
+		return
+	}
 
 	fwr, fwrCancel, err = p2pforwarder.NewForwarder(*p2p_port)
 	if err != nil {
