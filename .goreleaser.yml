@@ -32,15 +32,18 @@ builds:
 archives:
   - 
     id: p2ptunnel
-    format: zip
-  - replacements:
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-      386: i386
-      amd64: x86_64
+    format: tar.gz
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    format_overrides:
+      - goos: windows
+        format: zip
 checksum:
   name_template: 'checksums.txt'
+  algorithm: sha512
+signs:
+  - artifacts: all
+    signature: "${artifact}.asc"
+    args: ["--armor","--detach-sign", "${artifact}"]
 snapshot:
   name_template: "{{ .Tag }}"
 changelog:
