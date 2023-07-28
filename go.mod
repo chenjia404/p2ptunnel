@@ -5,11 +5,15 @@ go 1.20
 require (
 	github.com/libp2p/go-libp2p v0.28.1
 	//github.com/libp2p/go-libp2p-connmgr v0.4.0
-	github.com/libp2p/go-libp2p-kad-dht v0.24.2
+	github.com/libp2p/go-libp2p-kad-dht v0.24.3
 	github.com/sparkymat/appdir v0.0.0-20190803090504-1c2ab64aee87
 )
 
-require github.com/pion/udp/v2 v2.0.1
+require (
+	github.com/pion/udp/v2 v2.0.1
+	github.com/polydawn/refmt v0.89.0
+	golang.org/x/crypto v0.10.0
+)
 
 require (
 	github.com/benbjohnson/clock v1.3.5 // indirect
@@ -85,7 +89,6 @@ require (
 	github.com/pbnjay/memory v0.0.0-20210728143218-7b4eea64cf58 // indirect
 	github.com/pion/transport/v2 v2.0.2 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
-	github.com/polydawn/refmt v0.89.0 // indirect
 	github.com/prometheus/client_golang v1.14.0 // indirect
 	github.com/prometheus/client_model v0.4.0 // indirect
 	github.com/prometheus/common v0.42.0 // indirect
@@ -107,7 +110,6 @@ require (
 	go.uber.org/fx v1.19.2 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.24.0 // indirect
-	golang.org/x/crypto v0.10.0 // indirect
 	golang.org/x/exp v0.0.0-20230321023759-10a507213a29 // indirect
 	golang.org/x/mod v0.10.0 // indirect
 	golang.org/x/net v0.10.0 // indirect
