@@ -5,7 +5,7 @@ go 1.22
 toolchain go1.23.2
 
 require (
-	github.com/libp2p/go-libp2p v0.36.4
+	github.com/libp2p/go-libp2p v0.36.5
 	//github.com/libp2p/go-libp2p-connmgr v0.4.0
 	github.com/libp2p/go-libp2p-kad-dht v0.26.1
 	github.com/sparkymat/appdir v0.0.0-20190803090504-1c2ab64aee87
@@ -81,7 +81,7 @@ require (
 	github.com/multiformats/go-base32 v0.1.0 // indirect
 	github.com/multiformats/go-base36 v0.2.0 // indirect
 	github.com/multiformats/go-multiaddr v0.13.0 // indirect
-	github.com/multiformats/go-multiaddr-dns v0.3.1 // indirect
+	github.com/multiformats/go-multiaddr-dns v0.4.0 // indirect
 	github.com/multiformats/go-multiaddr-fmt v0.1.0 // indirect
 	github.com/multiformats/go-multibase v0.2.0 // indirect
 	github.com/multiformats/go-multicodec v0.9.0 // indirect
