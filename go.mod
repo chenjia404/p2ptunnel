@@ -2,7 +2,7 @@ module github.com/chenjia404/p2ptunnel
 
 go 1.23.0
 
-toolchain go1.23.3
+toolchain go1.24.5
 
 require (
 	github.com/libp2p/go-libp2p v0.38.2
