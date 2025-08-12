@@ -7,7 +7,7 @@ toolchain go1.23.3
 require (
 	github.com/libp2p/go-libp2p v0.43.0
 	//github.com/libp2p/go-libp2p-connmgr v0.4.0
-	github.com/libp2p/go-libp2p-kad-dht v0.33.1
+	github.com/libp2p/go-libp2p-kad-dht v0.34.0
 	github.com/sparkymat/appdir v0.0.0-20190803090504-1c2ab64aee87
 )
 
