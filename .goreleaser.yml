@@ -1,5 +1,6 @@
 # This is an example .goreleaser.yml file with some sane defaults.
-# Make sure to check the documentation at http://goreleaser.com
+# Make sure to check the documentation at https://goreleaser.com
+version: 2
 project_name: p2ptunnel
 before:
   hooks:
@@ -30,25 +31,52 @@ builds:
       - -s -w -X main.gitRev="{{.ShortCommit}}" -X main.buildTime="{{.CommitDate}}"
 
 archives:
-  - 
+  -
     id: p2ptunnel
-    format: tar.gz
+    # GoReleaser v2 prefers the plural `formats` field.
+    formats:
+      - tar.gz
     name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
     format_overrides:
       - goos: windows
-        format: zip
+        formats:
+          - zip
 checksum:
   name_template: 'checksums.txt'
   algorithm: sha512
 signs:
   - artifacts: all
+    cmd: C:\soft\GnuPG\bin\gpg.exe
     signature: "${artifact}.asc"
     args: ["--armor","--detach-sign", "${artifact}"]
 snapshot:
-  name_template: "{{ .Tag }}"
+  # GoReleaser v2 deprecates `name_template` in favor of `version_template`.
+  version_template: "{{ .Version }}"
 changelog:
   sort: asc
   filters:
     exclude:
       - '^docs:'
       - '^test:'
+
+dockers_v2:
+  -
+    id: p2ptunnel
+    images:
+      - "chenjia404/{{ .ProjectName }}"
+    tags:
+      - latest
+      - "{{ .Version }}"
+    platforms:
+      - linux/amd64
+      - linux/arm64
+    dockerfile: "goreleaser.dockerfile"
+    extra_files:
+      - LICENSE.txt
+    labels:
+      "org.opencontainers.image.title": "{{ .ProjectName }}"
+      "org.opencontainers.image.description": "A libp2p-based TCP/UDP tunnel without requiring a public IP."
+      "org.opencontainers.image.version": "{{ .Version }}"
+      "org.opencontainers.image.revision": "{{ .FullCommit }}"
+      "org.opencontainers.image.created": "{{ .Date }}"
+      "org.opencontainers.image.source": "{{ .GitURL }}"

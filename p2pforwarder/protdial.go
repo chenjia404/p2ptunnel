@@ -22,7 +22,9 @@ var dialsIP = "127.0.88.89"
 
 func setDialHandler(f *Forwarder) {
 	f.host.SetStreamHandler(dialProtID, func(s network.Stream) {
-		onInfoFn("'dial' from " + s.Conn().RemotePeer().Pretty())
+		// String() is the stable textual representation for peer.ID in newer go-libp2p releases.
+		remotePeer := s.Conn().RemotePeer().String()
+		onInfoFn("'dial' from " + remotePeer)
 
 		portBytes := make([]byte, 3)
 		_, err := io.ReadFull(s, portBytes)
@@ -56,8 +58,8 @@ func setDialHandler(f *Forwarder) {
 			return
 		}
 
-		onInfoFn("Dialing to " + addr + " from " + s.Conn().RemotePeer().Pretty())
-		defer onInfoFn("Closed dial to " + addr + " from " + s.Conn().RemotePeer().Pretty())
+		onInfoFn("Dialing to " + addr + " from " + remotePeer)
+		defer onInfoFn("Closed dial to " + addr + " from " + remotePeer)
 
 		portsMap.mux.Lock()
 		portContext := portsMap.ports[port]

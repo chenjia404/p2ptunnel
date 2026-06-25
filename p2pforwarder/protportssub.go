@@ -26,7 +26,9 @@ type portsManifest struct {
 
 func setPortsSubHandler(f *Forwarder) {
 	f.host.SetStreamHandler(portssubProtID, func(s network.Stream) {
-		onInfoFn("'portssub' from " + s.Conn().RemotePeer().Pretty())
+		// String() is the stable textual representation for peer.ID in newer go-libp2p releases.
+		remotePeer := s.Conn().RemotePeer().String()
+		onInfoFn("'portssub' from " + remotePeer)
 
 		modeBytes := make([]byte, 1)
 		_, err := io.ReadFull(s, modeBytes)
