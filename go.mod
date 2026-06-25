@@ -11,7 +11,7 @@ require (
 
 require (
 	github.com/pion/udp/v2 v2.0.1
-	github.com/polydawn/refmt v0.89.1-0.20231129105047-37766d95467a
+	github.com/polydawn/refmt v0.90.0
 	golang.org/x/crypto v0.53.0
 )
 
