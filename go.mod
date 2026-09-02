@@ -1,6 +1,6 @@
 module github.com/chenjia404/p2ptunnel
 
-go 1.25.7
+go 1.26.0
 
 require (
 	github.com/libp2p/go-libp2p v0.49.0
@@ -12,7 +12,7 @@ require (
 require (
 	github.com/pion/udp/v2 v2.0.1
 	github.com/polydawn/refmt v0.90.0
-	golang.org/x/crypto v0.55.0
+	golang.org/x/crypto v0.56.0
 )
 
 require (
