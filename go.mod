@@ -3,7 +3,7 @@ module github.com/chenjia404/p2ptunnel
 go 1.26.0
 
 require (
-	github.com/libp2p/go-libp2p v0.50.0
+	github.com/libp2p/go-libp2p v0.51.0
 	//github.com/libp2p/go-libp2p-connmgr v0.4.0
 	github.com/libp2p/go-libp2p-kad-dht v0.42.2
 	github.com/sparkymat/appdir v0.0.0-20190803090504-1c2ab64aee87
@@ -94,7 +94,7 @@ require (
 	github.com/prometheus/common v0.70.1 // indirect
 	github.com/prometheus/procfs v0.21.1 // indirect
 	github.com/quic-go/qpack v0.6.0 // indirect
-	github.com/quic-go/quic-go v0.62.0 // indirect
+	github.com/quic-go/quic-go v0.64.1 // indirect
 	github.com/quic-go/webtransport-go v0.13.0 // indirect
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
 	github.com/whyrusleeping/go-keyspace v0.0.0-20160322163242-5b898ac5add1 // indirect
